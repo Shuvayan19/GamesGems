@@ -1,41 +1,29 @@
-import { useEffect, useState } from "react";
-import apiClient from "../services/api-client";
-import { Spinner } from "@chakra-ui/react";
-interface Game {
-  id: number;
-  title: string;
-}
+
+import {  SimpleGrid, Spinner } from "@chakra-ui/react";
+import useGame from "../hooks/useGame";
+import GameCard from "./GameCard";
 
 const GameGrid = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [isloading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  useEffect(() => {
-    console.log("Fetching games...");
-    setLoading(true);
-    apiClient
-      .get<Game[]>("/xgames")
-      .then((res) => {
-        setGames(res.data);
-        console.log("game fetched...");
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+  const { games,  isloading, error } = useGame();
   return (
     <>
       {error && <p>{error}</p>}
-      {isloading && <Spinner/>}
-      <ul>
-      {games && Array.isArray(games) && games.length > 0 ? (
-          games.map((g) => <li key={g.id}>{g.title}</li>)
+      {isloading && <Spinner />}
+      <SimpleGrid  columns={{base:1,md:2,lg:3,xl:5}} padding="8px" spacing={12}>
+        {games && Array.isArray(games) && games.length > 0 ? (
+          games.map((g) => (
+            <GameCard
+              key={g.id}
+              id={g.id}
+              thumbnail={g.thumbnail}
+              title={g.title}
+              short_description={g.short_description}
+            />
+          ))
         ) : (
           <p>No games available.</p>
         )}
-      </ul>
+      </SimpleGrid>
     </>
   );
 };
