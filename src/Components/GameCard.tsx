@@ -1,40 +1,38 @@
 import { Button, ButtonGroup, Card, CardBody,CardFooter,Divider,Heading,Image, Stack,Text } from '@chakra-ui/react'
+import { Game } from '../hooks/useGame'
+import PlatfromIcon from './PlatfromIcon'
 
 interface Props{
-    id:number;
-    title: string;
-    thumbnail:string;
-    short_description:string;
+    game:Game
 }
 
-const GameCard = ({id,title,thumbnail,short_description}:Props) => {
+const GameCard = ({game}:Props) => {
   return (
     <Card maxW='sm'>
   <CardBody>
     <Image
-      src={thumbnail}
+      src={game.thumbnail}
       alt='Green double couch with wooden legs'
       borderRadius='lg'
     />
-    <Stack mt='6' spacing='3'>
-      <Heading size='md'>{title}</Heading>
+    <Stack mt='6' spacing='2'>
+      <Heading size='md'>{game.title}</Heading>
       <Text>
-        {short_description}
+        {game.short_description}
       </Text>
       <Text color='blue.600' fontSize='2xl'>
-        ${id}
+        ${game.id}
       </Text>
+      <PlatfromIcon platform={game.platform} />
     </Stack>
   </CardBody>
   <Divider />
   <CardFooter>
     <ButtonGroup spacing='2'>
-      <Button variant='solid' colorScheme='blue'>
-        Buy now
+      <Button variant='solid' colorScheme='blue' onClick={()=>window.open(game.game_url)}>
+        {game.platform==='Web Browser'?'Play Now':'Download'}
       </Button>
-      <Button variant='ghost' colorScheme='blue'>
-        Add to cart
-      </Button>
+      
     </ButtonGroup>
   </CardFooter>
 </Card>

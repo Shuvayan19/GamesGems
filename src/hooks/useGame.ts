@@ -7,6 +7,8 @@ export interface Game {
   title: string;
   thumbnail:string;
   short_description:string;
+  platform:string;
+  game_url:string;
 }
 
 const useGame = () => {

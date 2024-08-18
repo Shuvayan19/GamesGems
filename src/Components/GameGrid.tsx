@@ -13,11 +13,8 @@ const GameGrid = () => {
         {games && Array.isArray(games) && games.length > 0 ? (
           games.map((g) => (
             <GameCard
-              key={g.id}
-              id={g.id}
-              thumbnail={g.thumbnail}
-              title={g.title}
-              short_description={g.short_description}
+              game={g}
+            
             />
           ))
         ) : (
