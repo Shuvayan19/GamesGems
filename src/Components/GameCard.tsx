@@ -20,7 +20,7 @@ interface Props {
 const GameCard = ({ game }: Props) => {
   const altext='thumnail of '+game.title+'game';
   return (
-    <Card width="350px">
+    <Card >
       <CardBody>
         <Image
           src={game.thumbnail}

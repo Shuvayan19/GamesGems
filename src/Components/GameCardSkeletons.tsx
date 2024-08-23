@@ -3,7 +3,7 @@ import { Card,CardBody,CardFooter,Divider,Skeleton, SkeletonText, Stack } from '
 
 const GameCardSkeletons = () => {
   return (
-    <Card width='300px'>
+    <Card >
         
         <CardBody>
             <Skeleton height='200px' borderRadius='lg '/>

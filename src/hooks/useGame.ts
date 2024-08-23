@@ -9,6 +9,7 @@ export interface Game {
   short_description:string;
   platform:string;
   game_url:string;
+  genre:string;
 }
 
 const useGame = () => {
