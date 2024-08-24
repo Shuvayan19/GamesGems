@@ -8,9 +8,12 @@ import {
 } from "@chakra-ui/react";
 import useGenre from "../hooks/useGenre";
 import genreImgMap from "../services/genreListImg";
-import { color } from "framer-motion";
 
-const GenreList = () => {
+interface Props {
+  onChangeGenre: (g: string) => void;
+  genre: string;
+}
+const GenreList = ({ onChangeGenre, genre }: Props) => {
   const genreList = useGenre(); // Assuming `useGenre` returns { genreList: string[] }
   const { colorMode } = useColorMode();
   console.log("current colorMode", colorMode);
@@ -18,21 +21,24 @@ const GenreList = () => {
     <List padding={2}>
       {genreList.map((g) => {
         // Conditionally apply style based on genre and theme
+      // console.log("Is current genre:", genre === g, "Current genre:", genre, "Genre:", g);
+
         const shouldApplyFilter =
           [
-            "Mmorpg",
+            "MMORPG",
             "Shooter",
             "Strategy",
-            "Action rpg",
-            "Battle royale",
-            "Arpg",
+            "Action RPG",
+            "Battle Royale",
+            "ARPG",
             "Fighting",
-            "Card game",
+            "Card Game",
             "Racing",
-            "Mmo",
+            "MMO",
             "Fantasy",
+            "Action Game",
           ].includes(g) && colorMode === "dark";
-
+          
         return (
           <ListItem key={g}>
             <HStack>
@@ -43,7 +49,15 @@ const GenreList = () => {
                 src={genreImgMap[g]}
                 style={shouldApplyFilter ? { filter: "invert(100%)" } : {}}
               />
-              <Button onClick={() => console.log(g)} variant="link">
+              
+              <Button
+                color={genre === g ? "blue.500" : "inherit"}
+               
+
+                onClick={() => onChangeGenre(g)}
+                variant="link"
+              >
+              
                 {g}
               </Button>
             </HStack>

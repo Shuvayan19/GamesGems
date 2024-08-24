@@ -5,17 +5,18 @@ import { CanceledError } from "axios";
 export interface Game {
   id: number;
   title: string;
-  thumbnail:string;
-  short_description:string;
-  platform:string;
-  game_url:string;
-  genre:string;
+  thumbnail: string;
+  short_description: string;
+  platform: string;
+  game_url: string;
+  genre: string;
 }
 
-const useGame = () => {
+const useGame = (currentGenre: string = "") => {
   const [games, setGames] = useState<Game[]>([]);
   const [isloading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
   useEffect(() => {
     const controller = new AbortController();
     console.log("Fetching games...");
@@ -24,18 +25,22 @@ const useGame = () => {
     apiClient
       .get<Game[]>("/games", { signal: controller.signal })
       .then((res) => {
-        setGames(res.data);
+        const filteredGames = currentGenre&&currentGenre!=='All Games'
+          ? res.data.filter((game) => game.genre === currentGenre)
+          : res.data;
+        console.log("games fetched", filteredGames.length);
+        setGames(filteredGames);
         console.log("game fetched...");
         setLoading(false);
       })
       .catch((err) => {
-        if(err instanceof CanceledError)return;
+        if (err instanceof CanceledError) return;
         setError(err.message);
         setLoading(false);
       });
 
     return () => controller.abort();
-  }, []);
+  }, [currentGenre]);
 
   return { games, isloading, error };
 };

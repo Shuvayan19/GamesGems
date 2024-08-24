@@ -9,6 +9,8 @@ import {
   Image,
   Stack,
   Text,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Game } from "../hooks/useGame";
 import PlatfromIcon from "./PlatfromIcon";
@@ -18,15 +20,12 @@ interface Props {
 }
 
 const GameCard = ({ game }: Props) => {
-  const altext='thumnail of '+game.title+'game';
+  const altext = "thumnail of " + game.title + "game";
+  const bgColor = useColorModeValue("gray.50", "gray.700");
   return (
-    <Card >
+    <Card bg={bgColor}>
       <CardBody>
-        <Image
-          src={game.thumbnail}
-          alt= {altext}
-          borderRadius="lg"
-        />
+        <Image src={game.thumbnail} alt={altext} borderRadius="lg" />
         <Stack mt="6" spacing="2">
           <Heading size="md">{game.title}</Heading>
           <Text>{game.short_description}</Text>
