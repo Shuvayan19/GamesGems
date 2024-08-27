@@ -6,7 +6,7 @@ import { useState } from "react";
 import PlatformList from "./Components/PlatformList";
 
 const App = () => {
-  const[currentGenre,setCurrentGenre]=useState<string>('');
+  const[currentGenre,setCurrentGenre]=useState<string>('All Games');
   const[currentPlatform,setPlatform]=useState<string>('All Platforms');
   return (
     <>
