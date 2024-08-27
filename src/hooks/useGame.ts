@@ -12,25 +12,19 @@ export interface Game {
   genre: string;
 }
 
-const useGame = (currentGenre: string = "") => {
+const useGame = () => {
   const [games, setGames] = useState<Game[]>([]);
-  const [isloading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
-    console.log("Fetching games...");
     setLoading(true);
 
     apiClient
       .get<Game[]>("/games", { signal: controller.signal })
       .then((res) => {
-        const filteredGames = currentGenre&&currentGenre!=='All Games'
-          ? res.data.filter((game) => game.genre === currentGenre)
-          : res.data;
-        console.log("games fetched", filteredGames.length);
-        setGames(filteredGames);
-        console.log("game fetched...");
+        setGames(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -40,9 +34,9 @@ const useGame = (currentGenre: string = "") => {
       });
 
     return () => controller.abort();
-  }, [currentGenre]);
+  }, []);
 
-  return { games, isloading, error };
+  return { games, isLoading, error };
 };
 
 export default useGame;

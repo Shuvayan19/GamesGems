@@ -13,16 +13,31 @@ interface Props {
   onChangeGenre: (g: string) => void;
   genre: string;
 }
+
 const GenreList = ({ onChangeGenre, genre }: Props) => {
   const genreList = useGenre(); // Assuming `useGenre` returns { genreList: string[] }
   const { colorMode } = useColorMode();
-  console.log("current colorMode", colorMode);
-  return (
-    <List padding={2}>
-      {genreList.map((g) => {
-        // Conditionally apply style based on genre and theme
-      // console.log("Is current genre:", genre === g, "Current genre:", genre, "Genre:", g);
 
+  // Helper function to render the button
+  const renderButton = (g: string) => {
+    const isAllGames = g === "All Games";
+
+    return (
+      <Button
+        color={genre === g ? "blue.500" : "inherit"}
+        fontSize={isAllGames ? "x-large" : "small"}
+        marginY={isAllGames ? "10px" : "0"}
+        onClick={() => onChangeGenre(g)}
+        variant="link"
+      >
+        {g}
+      </Button>
+    );
+  };
+
+  return (
+    <List padding={1}>
+      {genreList.map((g) => {
         const shouldApplyFilter =
           [
             "MMORPG",
@@ -38,29 +53,23 @@ const GenreList = ({ onChangeGenre, genre }: Props) => {
             "Fantasy",
             "Action Game",
           ].includes(g) && colorMode === "dark";
-          
+
         return (
           <ListItem key={g}>
-            <HStack>
-              <Image
-                paddingY="2px"
-                boxSize="32px"
-                borderRadius={8}
-                src={genreImgMap[g]}
-                style={shouldApplyFilter ? { filter: "invert(100%)" } : {}}
-              />
-              
-              <Button
-                color={genre === g ? "blue.500" : "inherit"}
-               
-
-                onClick={() => onChangeGenre(g)}
-                variant="link"
-              >
-              
-                {g}
-              </Button>
-            </HStack>
+            {g === "All Games" ? (
+              renderButton(g) 
+            ) : (
+              <HStack>
+                <Image
+                  paddingY="2px"
+                  boxSize="32px"
+                  borderRadius={8}
+                  src={genreImgMap[g]}
+                  style={shouldApplyFilter ? { filter: "invert(100%)" } : {}}
+                />
+                {renderButton(g)}
+              </HStack>
+            )}
           </ListItem>
         );
       })}
