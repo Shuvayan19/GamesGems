@@ -21,7 +21,7 @@ interface Props {
 
 const GameCard = ({ game }: Props) => {
   const altext = "thumnail of " + game.title + "game";
-  const bgColor = useColorModeValue("gray.50", "gray.700");
+  const bgColor = useColorModeValue("gray.100", "gray.700");
   return (
     <Card bg={bgColor}>
       <CardBody>

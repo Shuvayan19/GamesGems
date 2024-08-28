@@ -7,10 +7,11 @@ import sad from "../assets/sad.png";
 interface Props {
   genre?: string;
   platform?: string;
+  sortOrder?:string;
 }
 
-const GameGrid = ({ genre, platform }: Props) => {
-  const { filteredGames, isLoading, error } = useFilteredGames(genre || "", platform || "");
+const GameGrid = ({ genre, platform,sortOrder }: Props) => {
+  const { filteredGames, isLoading, error } = useFilteredGames(genre || "", platform || "",sortOrder||"");
   console.log("Games fetched...", filteredGames.length);
   const skeletons = [1, 2, 3, 4, 5, 6];
 

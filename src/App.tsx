@@ -1,13 +1,16 @@
-import { Grid, GridItem, Show } from "@chakra-ui/react";
+import { Grid, GridItem, HStack, Show } from "@chakra-ui/react";
 import NavBar from "./Components/NavBar";
 import GameGrid from "./Components/GameGrid";
 import GenreList from "./Components/GenreList";
 import { useState } from "react";
 import PlatformList from "./Components/PlatformList";
+import SortList from "./Components/SortList";
+
 
 const App = () => {
-  const[currentGenre,setCurrentGenre]=useState<string>('All Games');
-  const[currentPlatform,setPlatform]=useState<string>('All Platforms');
+  const [currentGenre, setCurrentGenre] = useState<string>("All Games");
+  const [currentPlatform, setPlatform] = useState<string>("All Platforms");
+  const [currentSortOrder, setSortOrder] = useState<string>();
   return (
     <>
       <Grid
@@ -23,13 +26,26 @@ const App = () => {
         <Show above="lg">
           {" "}
           <GridItem area={"aside"}>
-            <GenreList genre={currentGenre} onChangeGenre={(genre)=>setCurrentGenre(genre)}/>
+            <GenreList
+              genre={currentGenre}
+              onChangeGenre={(genre) => setCurrentGenre(genre)}
+            />
           </GridItem>
         </Show>
 
         <GridItem area={"main"}>
-          <PlatformList platform={currentPlatform} onPlatformChange={p=>setPlatform(p)} />
-          <GameGrid genre={currentGenre} platform={currentPlatform}/>
+          <HStack>
+            <SortList onSortOrderChange={(s) => setSortOrder(s)} sortOrder={currentSortOrder}/>
+            <PlatformList
+              platform={currentPlatform}
+              onPlatformChange={(p) => setPlatform(p)}
+            />
+          </HStack>
+          <GameGrid
+            genre={currentGenre}
+            platform={currentPlatform}
+            sortOrder={currentSortOrder}
+          />
         </GridItem>
       </Grid>
     </>
