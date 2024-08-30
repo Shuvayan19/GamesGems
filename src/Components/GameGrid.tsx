@@ -8,13 +8,14 @@ interface Props {
   genre?: string;
   platform?: string;
   sortOrder?:string;
+  search?:string;
 }
 
-const GameGrid = ({ genre, platform,sortOrder }: Props) => {
-  const { filteredGames, isLoading, error } = useFilteredGames(genre || "", platform || "",sortOrder||"");
+const GameGrid = ({ genre, platform,sortOrder,search }: Props) => {
+  const { filteredGames, isLoading, error } = useFilteredGames(genre || "", platform || "",sortOrder||"",search||"");
   console.log("Games fetched...", filteredGames.length);
   const skeletons = [1, 2, 3, 4, 5, 6];
-
+  if(search!="")console.log(search)
   return (
     <Flex direction="column" w="100%"  justify="center" align="center" padding="5px">
       {error && <p>{error}</p>}

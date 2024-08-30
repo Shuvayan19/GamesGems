@@ -1,4 +1,5 @@
 import {
+  Badge,
   Button,
   ButtonGroup,
   Card,
@@ -6,7 +7,9 @@ import {
   CardFooter,
   Divider,
   Heading,
+  HStack,
   Image,
+  Spacer,
   Stack,
   Text,
   useColorMode,
@@ -25,12 +28,17 @@ const GameCard = ({ game }: Props) => {
   return (
     <Card bg={bgColor}>
       <CardBody>
-        <Image src={game.thumbnail} alt={altext} borderRadius="lg" />
+        <Image marginBottom={3} src={game.thumbnail} alt={altext} borderRadius="lg" />
+          <HStack>
+            <PlatfromIcon platform={game.platform} />
+            <Spacer/>
+            <Badge borderRadius='full' px='2' colorScheme='teal'>
+              {game.genre}
+            </Badge>
+          </HStack>
         <Stack mt="6" spacing="2">
           <Heading size="md">{game.title}</Heading>
           <Text>{game.short_description}</Text>
-
-          <PlatfromIcon platform={game.platform} />
         </Stack>
       </CardBody>
       <Divider />

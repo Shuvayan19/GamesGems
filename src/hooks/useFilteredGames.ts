@@ -1,15 +1,15 @@
 import { useMemo } from "react";
 import useGame, { Game } from "./useGame";
 
-
 const useFilteredGames = (
   currentGenre: string = "",
   currentPlatform: string = "",
-  currentSortOrder:string=""
+  currentSortOrder: string = "",
+  currentSearch: string = ""
 ) => {
-  const { games, isLoading, error } = useGame({sort_order:currentSortOrder});
+  const { games, isLoading, error } = useGame({ sort_order: currentSortOrder });
   const filteredGames = useMemo(() => {
-    return games.filter((game) => {
+    let result = games.filter((game) => {
       const genreMatch =
         currentGenre === "All Games" || game.genre === currentGenre;
       const platformMatch =
@@ -18,8 +18,12 @@ const useFilteredGames = (
 
       return genreMatch && platformMatch;
     });
-  }, [games, currentGenre, currentPlatform,currentSortOrder]);
-
+    
+    if (currentSearch) {
+      result = result.filter((g) => g.title.toLowerCase().includes(currentSearch.toLowerCase()));
+    }
+    return result;
+  }, [games, currentGenre, currentPlatform, currentSortOrder,currentSearch]);
 
   return { filteredGames, isLoading, error };
 };
