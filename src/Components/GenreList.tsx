@@ -25,7 +25,7 @@ const GenreList = ({ onChangeGenre, genre }: Props) => {
     return (
       <Button
         color={genre === g ? "blue.500" : "inherit"}
-        fontSize={isAllGames ? "x-large" : "small"}
+        fontSize={isAllGames ? "xx-large" : "medium"}
         marginY={isAllGames ? "10px" : "0"}
         onClick={() => onChangeGenre(g)}
         variant="link"

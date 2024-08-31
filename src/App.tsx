@@ -27,7 +27,7 @@ const App = () => {
         </GridItem>
         <Show above="lg">
           {" "}
-          <GridItem area={"aside"}>
+          <GridItem area={"aside"} marginTop={2.5}>
             <GenreList
               genre={currentGenre}
               onChangeGenre={(genre) => setCurrentGenre(genre)}
