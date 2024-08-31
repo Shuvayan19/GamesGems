@@ -14,15 +14,15 @@ interface Props {
 const GameGrid = ({ genre, platform,sortOrder,search }: Props) => {
   const { filteredGames, isLoading, error } = useFilteredGames(genre || "", platform || "",sortOrder||"",search||"");
   console.log("Games fetched...", filteredGames.length);
-  const skeletons = [1, 2, 3, 4, 5, 6];
+  const skeletons = [1, 2, 3, 4, 5];
   if(search!="")console.log(search)
   return (
     <Flex direction="column" w="100%"  justify="center" align="center" padding="5px">
-      {error && <p>{error}</p>}
+      
       {isLoading && <Spinner />}
       {filteredGames && Array.isArray(filteredGames) && filteredGames.length > 0 ? (
         <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3, xl: 5 }}
+          columns={{ base: 1, md: 2, lg: 3, xl: 4 }}
           spacing={3}
           w="100%"
         >

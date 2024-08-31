@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, GridItem, HStack, Show, Spacer } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, HStack, Show, Spacer, useBreakpointValue } from "@chakra-ui/react";
 import NavBar from "./Components/NavBar";
 import GameGrid from "./Components/GameGrid";
 import GenreList from "./Components/GenreList";
@@ -12,6 +12,7 @@ const App = () => {
   const [currentPlatform, setPlatform] = useState<string>("All Platforms");
   const [currentSortOrder, setSortOrder] = useState<string>();
   const [currentSearch, setCurrentSearch] = useState<string>();
+  const gridPadding=useBreakpointValue({base:4,lg:1})
   return (
     <>
       <Grid
@@ -34,7 +35,7 @@ const App = () => {
           </GridItem>
         </Show>
 
-        <GridItem area={"main"}>
+        <GridItem area={"main"} padding={gridPadding}>
           <Flex paddingLeft={2} marginY={5}>
             <Box marginRight={3}>
               <SortList
@@ -47,9 +48,12 @@ const App = () => {
               onPlatformChange={(p) => setPlatform(p)}
             />
             <Spacer/>
+            <Show above={"lg"}>
             <Box paddingRight={5}>
               <DynamicName genre={currentGenre} platform={currentPlatform}/>
             </Box>
+            </Show>
+
           </Flex>
           <GameGrid
             genre={currentGenre}
