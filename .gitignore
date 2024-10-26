@@ -13,7 +13,7 @@ dist-ssr
 *.local
 #apiCall file
 #src/services/api-client.ts
-
+.env
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
