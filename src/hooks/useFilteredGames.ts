@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import useGame, { Game } from "./useGame";
+import useGame from "./useGame";
 
 const useFilteredGames = (
   currentGenre: string = "",
@@ -7,9 +7,14 @@ const useFilteredGames = (
   currentSortOrder: string = "",
   currentSearch: string = ""
 ) => {
-  const { games, isLoading, error } = useGame({ sort_order: currentSortOrder });
+  const {
+    data: games,
+    isLoading,
+    error,
+  } = useGame({ sort_order: currentSortOrder });
   const filteredGames = useMemo(() => {
-    let result = games.filter((game) => {
+    const gamesList = games || [];
+    let result = gamesList.filter((game) => {
       const genreMatch =
         currentGenre === "All Games" || game.genre === currentGenre;
       const platformMatch =
@@ -18,12 +23,14 @@ const useFilteredGames = (
 
       return genreMatch && platformMatch;
     });
-    
+
     if (currentSearch) {
-      result = result.filter((g) => g.title.toLowerCase().includes(currentSearch.toLowerCase()));
+      result = result.filter((g) =>
+        g.title.toLowerCase().includes(currentSearch.toLowerCase())
+      );
     }
     return result;
-  }, [games, currentGenre, currentPlatform, currentSortOrder,currentSearch]);
+  }, [games, currentGenre, currentPlatform, currentSortOrder, currentSearch]);
 
   return { filteredGames, isLoading, error };
 };
