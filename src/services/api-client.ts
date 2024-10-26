@@ -3,8 +3,8 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: "https://free-to-play-games-database.p.rapidapi.com/api",
   headers: {
-    "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_HOST,
-    "x-rapidapi-host": process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+    "x-rapidapi-key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+    "x-rapidapi-host": process.env.NEXT_PUBLIC_RAPIDAPI_HOST,
   },
 });
 class APIClient<T> {
