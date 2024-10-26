@@ -11,6 +11,9 @@ class APIClient<T> {
   endpoint: string;
   constructor(endpoint: string) {
     this.endpoint = endpoint;
+    console.log("API Key:", process.env.NEXT_PUBLIC_RAPIDAPI_KEY);
+    console.log("API Host:", process.env.NEXT_PUBLIC_RAPIDAPI_HOST);
+
   }
   getAll = () => {
     return axiosInstance.get<T[]>(this.endpoint).then((res) => res.data);
