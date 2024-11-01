@@ -1,4 +1,13 @@
-import { Box, Flex, Grid, GridItem, HStack, Show, Spacer, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  HStack,
+  Show,
+  Spacer,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import NavBar from "./Components/NavBar";
 import GameGrid from "./Components/GameGrid";
 import GenreList from "./Components/GenreList";
@@ -12,7 +21,7 @@ const App = () => {
   const [currentPlatform, setPlatform] = useState<string>("All Platforms");
   const [currentSortOrder, setSortOrder] = useState<string>();
   const [currentSearch, setCurrentSearch] = useState<string>();
-  const gridPadding=useBreakpointValue({base:4,lg:1})
+  const gridPadding = useBreakpointValue({ base: 4, lg: 1 });
   return (
     <>
       <Grid
@@ -22,12 +31,17 @@ const App = () => {
         }}
         templateColumns={{ base: "1fr", lg: "200px 1fr" }}
       >
-        <GridItem area={"nav"}>
+        <GridItem area={"nav"} position={"sticky"} top={0}>
           <NavBar onSearch={(s) => setCurrentSearch(s)} />
         </GridItem>
         <Show above="lg">
           {" "}
-          <GridItem area={"aside"} marginTop={2.5}>
+          <GridItem
+            area={"aside"}
+            marginTop={2.5}
+            position={"sticky"}
+            top="60px"
+          >
             <GenreList
               genre={currentGenre}
               onChangeGenre={(genre) => setCurrentGenre(genre)}
@@ -36,31 +50,37 @@ const App = () => {
         </Show>
 
         <GridItem area={"main"} padding={gridPadding}>
-          <Flex paddingLeft={2} marginY={5}>
-            <Box marginRight={3}>
-              <SortList
-                onSortOrderChange={(s) => setSortOrder(s)}
-                sortOrder={currentSortOrder}
+          <Box position="sticky" height="60px" padding="2px">
+            <Flex paddingLeft={2} marginY={5}>
+              <Box marginRight={3}>
+                <SortList
+                  onSortOrderChange={(s) => setSortOrder(s)}
+                  sortOrder={currentSortOrder}
+                />
+              </Box>
+              <PlatformList
+                platform={currentPlatform}
+                onPlatformChange={(p) => setPlatform(p)}
               />
-            </Box>
-            <PlatformList
+              <Spacer />
+              <Show above={"lg"}>
+                <Box paddingRight={5}>
+                  <DynamicName
+                    genre={currentGenre}
+                    platform={currentPlatform}
+                  />
+                </Box>
+              </Show>
+            </Flex>
+          </Box>
+          <Box height="calc(100vh - 60px)" overflowY="scroll" marginTop={4}>
+            <GameGrid
+              genre={currentGenre}
               platform={currentPlatform}
-              onPlatformChange={(p) => setPlatform(p)}
+              sortOrder={currentSortOrder}
+              search={currentSearch}
             />
-            <Spacer/>
-            <Show above={"lg"}>
-            <Box paddingRight={5}>
-              <DynamicName genre={currentGenre} platform={currentPlatform}/>
-            </Box>
-            </Show>
-
-          </Flex>
-          <GameGrid
-            genre={currentGenre}
-            platform={currentPlatform}
-            sortOrder={currentSortOrder}
-            search={currentSearch}
-          />
+          </Box>
         </GridItem>
       </Grid>
     </>
