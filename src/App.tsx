@@ -50,7 +50,7 @@ const App = () => {
         </Show>
 
         <GridItem area={"main"} padding={gridPadding}>
-          <Box position="sticky" height="60px" padding="2px">
+          <Box position="sticky" height="60px" zIndex="10" padding="2px">
             <Flex paddingLeft={2} marginY={5}>
               <Box marginRight={3}>
                 <SortList
